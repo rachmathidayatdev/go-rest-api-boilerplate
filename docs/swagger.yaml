@@ -1,0 +1,180 @@
+basePath: /
+definitions:
+  models.Book:
+    properties:
+      author:
+        type: string
+      id:
+        type: integer
+      title:
+        type: string
+    required:
+    - author
+    - title
+    type: object
+  models.SuccessResponse:
+    properties:
+      message:
+        type: string
+      status:
+        type: integer
+    type: object
+  models.SuccessResponseList:
+    properties:
+      data:
+        items:
+          $ref: '#/definitions/models.Book'
+        type: array
+      message:
+        type: string
+      status:
+        type: integer
+    type: object
+  models.SuccessResponseObject:
+    properties:
+      data:
+        $ref: '#/definitions/models.Book'
+      message:
+        type: string
+      status:
+        type: integer
+    type: object
+host: localhost:9000
+info:
+  contact:
+    email: support@swagger.io
+    name: API Support
+    url: http://www.swagger.io/support
+  description: This is a documentation of API.
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  termsOfService: http://swagger.io/terms/
+  title: GO REST API DOCUMENTATION
+  version: "1.0"
+paths:
+  /book:
+    get:
+      consumes:
+      - '*/*'
+      description: Get list of book item
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.SuccessResponseList'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/models.SuccessResponseObject'
+      summary: Get list of book
+      tags:
+      - book
+    post:
+      consumes:
+      - application/json
+      description: Create a new book item
+      parameters:
+      - description: Param Book
+        in: body
+        name: book
+        required: true
+        schema:
+          $ref: '#/definitions/models.Book'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/models.SuccessResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/models.SuccessResponse'
+      summary: Create a book
+      tags:
+      - book
+    put:
+      consumes:
+      - application/json
+      description: Update a book item
+      parameters:
+      - description: Param Book
+        in: body
+        name: book
+        required: true
+        schema:
+          $ref: '#/definitions/models.Book'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.SuccessResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/models.SuccessResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/models.SuccessResponse'
+      summary: Update a book
+      tags:
+      - book
+  /book/{id}:
+    delete:
+      consumes:
+      - '*/*'
+      description: Delete a book item
+      parameters:
+      - description: Book ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.SuccessResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/models.SuccessResponse'
+      summary: Delete a book
+      tags:
+      - book
+    get:
+      consumes:
+      - '*/*'
+      description: Get a book item
+      parameters:
+      - description: Book ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.SuccessResponseObject'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/models.SuccessResponseObject'
+      summary: Get a book
+      tags:
+      - book
+schemes:
+- http
+swagger: "2.0"
